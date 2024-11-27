@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Management Dashboard</title>
+    <style>
+        /* Basic CSS styling for the layout */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        button {
+            padding: 10px 15px;
+            margin-top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Issue Management Dashboard</h1>
+        <p>Welcome to the IT issue management system. You can view, manage, and resolve tickets here.</p>
+    </header>
+    <section>
+        <h2>Search for Issues</h2>
+        <form action="#" method="GET">
+            <label for="ticket-id">Ticket ID:</label>
+            <input type="text" id="ticket-id" name="ticket-id" placeholder="Enter ticket ID (e.g., #IT1001)">
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+                <option value="all">All</option>
+                <option value="open">Open</option>
+                <option value="resolved">Resolved</option>
+                <option value="in-progress">In Progress</option>
+            </select>
+            <button type="submit">Search</button>
+        </form>
+    </section>
+    <section>
+        <h2>Search Results</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Submission Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#IT1001</td>
+                    <td>Password Reset</td>
+                    <td>Open</td>
+                    <td>High</td>
+                    <td>2024-11-01</td>
+                </tr>
+                <tr>
+                    <td>#IT1002</td>
+                    <td>Printer Issue</td>
+                    <td>Resolved</td>
+                    <td>Medium</td>
+                    <td>2024-11-05</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <section>
+        <h2>Resolve an Issue</h2>
+        <form action="#" method="POST">
+            <label for="resolution-description">Resolution Description:</label>
+            <textarea id="resolution-description" name="resolution-description" rows="4" placeholder="Describe how the issue was resolved..."></textarea>
+            <button type="submit">Resolve Issue</button>
+        </form>
+    </section>
+    <section>
+        <h2>Close Issue</h2>
+        <form action="#" method="POST">
+            <button type="submit">Close Issue</button>
+        </form>
+    </section>
+    
+    <section>
+        <h2>Provide Feedback</h2>
+        <form>
+            <fieldset>
+              <legend>How do you rate our service?</legend>
+          
+              <label for="very-satisfied">Very satisfied</label>
+              <input type="radio" id="very-satisfied" name="satisfaction" value="Very Satisfied">
+          
+              <label for="satisfied">Satisfied</label>
+              <input type="radio" id="satisfied" name="satisfaction" value="Satisfied">
+          
+              <label for="dissatisfied">Dissatisfied</label>
+              <input type="radio" id="dissatisfied" name="satisfaction" value="Dissatisfied">
+          
+              <label for="comments">Additional Comments</label>
+              <textarea id="comments" name="comments" rows="4" cols="50"></textarea>
+            </fieldset>
+          </form>
+    </section>
+    <section>
+        <h2>Generate Reports</h2>
+        <form action="#" method="GET">
+            <label for="report-type">Select Report Type:</label>
+            <select id="report-type" name="report-type">
+                <option value="ticket-summary">Ticket Summary</option>
+                <option value="resolved-issues">Resolved Issues</option>
+                <option value="performance">Performance Metrics</option>
+            </select>
+            <button type="submit">Generate Report</button>
+        </form>
+    </section>
+                  
