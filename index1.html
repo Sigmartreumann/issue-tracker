@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Support Dashboard</title>
+    <style>
+        /* Base styles */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .login-container, .dashboard-container, .ticket-container {
+            background-color: #f8f8f8;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .login-container {
+            max-width: 300px;
+            margin: auto;
+            background-color: red;
+            padding: 30px;
+            border-radius: 8px;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .login-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .login-container button:hover {
+            background-color: #45a049;
+        }
+        .dashboard-container {
+            display: none;
+            background-color: #f8f8f8;
+        }
+        .dashboard-container h2 {
+            color: #4CAF50;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        .table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .create-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .create-button:hover {
+            background-color: #0056b3;
+        }
+        .ticket-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .ticket-modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+        }
+        .ticket-modal-content input,
+        .ticket-modal-content textarea,
+        .ticket-modal-content select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .ticket-modal-content button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .ticket-modal-content button:hover {
+            background-color: #0056b3;
+        }
+        /* Video Styles */
+        .video-container {
+            margin-top: 10px;
+            padding: 10px;
+        }
+        video {
+            width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+        }
+        /* File Upload Styles */
+        .file-upload-container {
+            margin-top: 10px;
+        }
+        .file-upload-container input[type="file"] {
+            padding: 10px;
+            border-radius: 4px;
+        }
+        /* Search Styles */
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-container input, .search-container select {
+            padding: 8px;
+            margin-right: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .report-button {
+            background-color: #ff9800;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .report-button:hover {
+            background-color: #e68900;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>IT Support Dashboard</h1>
+    </header>
+
+    <main>
+
+        <!-- Login Page -->
+        <section class="login-container" id="login-page">
+            <h2>Login</h2>
+            <input type="text" id="username" placeholder="Username" />
+            <input type="password" id="password" placeholder="Password" />
+            <button onclick="login()">Login</button>
+        </section>
+
+        <!-- Dashboard (IT Staff View) -->
+        <section class="dashboard-container" id="it-dashboard">
+            <h2>IT Staff Dashboard</h2>
+            <button onclick="logout()">Logout</button>
+
+            <!-- Search Section -->
+            <div class="search-container">
+                <input type="text" id="search-title" placeholder="Search by Title" oninput="filterIssues()" />
+                <select id="search-status" onchange="filterIssues()">
+                    <option value="">Status</option>
+                    <option value="Open">Open</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Resolved">Resolved</option>
+                </select>
+                <select id="search-priority" onchange="filterIssues()">
+                    <option value="">Priority</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+                <input type="date" id="search-date" onchange="filterIssues()" />
+                <button class="report-button" onclick="generateReport()">Generate Report</button>
+            </div>
+
+            <table id="issue-table" class="table">
+                <thead>
+                    <tr>
+                        <th>Ticket ID</th>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Assigned To</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Issue rows will be injected here -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- User Dashboard (User View) -->
+        <section class="dashboard-container" id="user-dashboard">
+            <h2>User Dashboard</h2>
+            <button onclick="logout()">Logout</button>
+
+            <table id="user-issue-table" class="table">
+                <thead>
+                    <tr>
+                        <th>Ticket ID</th>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- User issues will be injected here -->
+                </tbody>
+            </table>
+
+            <button class="create-button" onclick="openCreateTicketModal()">Create New Ticket</button>
+        </section>
+
+        <!-- Ticket Creation Modal for Users -->
+        <section class="ticket-modal" id="ticket-creation-modal" style="display:none;">
+            <div class="ticket-modal-content">
+                <h3>Create New Ticket</h3>
+                <label for="ticket-title">Title:</label>
+                <input type="text" id="ticket-title" placeholder="Enter ticket title" />
+                <label for="ticket-description">Description:</label>
+                <textarea id="ticket-description" placeholder="Describe the issue"></textarea>
+                <label for="ticket-priority">Priority:</label>
+                <select id="ticket-priority">
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+
+                <!-- Video Upload -->
+                <label for="ticket-video">Attach Video:</label>
+                <input type="file" id="ticket-video" accept="video/*" />
+
+                <!-- File Upload -->
+                <label for="ticket-files">Attach Files:</label>
+                <input type="file" id="ticket-files" accept="image/*, application/pdf" multiple />
+
+                <button onclick="createTicket()">Create Ticket</button>
+                <button onclick="closeCreateTicketModal()">Cancel</button>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2024 IT Support Dashboard. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function login() {
+            // Implement login functionality
+        }
+
+        function logout() {
+            // Implement logout functionality
+        }
+
+        function openCreateTicketModal() {
+            document.getElementById('ticket-creation-modal').style.display = 'flex';
+        }
+
+        function closeCreateTicketModal() {
+            document.getElementById('ticket-creation-modal').style.display = 'none';
+        }
+
+        function filterIssues() {
+            // Implement filter functionality
+        }
+
+        function createTicket() {
+            // Implement ticket creation functionality
+        }
+
+        function generateReport() {
+            // Implement report generation
+        }
+    </script>
+</body>
+</html>
