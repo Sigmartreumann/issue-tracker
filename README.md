@@ -25,5 +25,6 @@ This is a web-based IT Support Dashboard designed for managing IT support ticket
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/your-username/it-support-dashboard.git
-   cd it-support-dashboard
+   git clone https://github.com/Sigmartreumann/issue-tracker.git
+   cd issue-tracker
+
