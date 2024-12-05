@@ -19,8 +19,8 @@
         <!-- Login Page -->
         <section class="login-container" id="login-page">
             <h2>Login</h2>
-            <input type="text" id="username" placeholder="Username" />
-            <input type="password" id="password" placeholder="Password" />
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
             <button onclick="login()">Login</button>
         </section>
 
@@ -38,7 +38,7 @@
 
             <!-- Search Section -->
             <div class="search-container">
-                <input type="text" id="search-title" placeholder="Search by Title" oninput="filterIssues()" />
+                <input type="text" id="search-title" placeholder="Search by Title" oninput="filterIssues()">
                 <select id="search-status" onchange="filterIssues()">
                     <option value="">Status</option>
                     <option value="Open">Open</option>
@@ -101,17 +101,17 @@
             <div class="ticket-modal-content">
                 <h3>Create New Ticket</h3>
                 <label for="ticket-title">Title:</label>
-                <input type="text" id="ticket-title" placeholder="Enter ticket title" />
+                <input type="text" id="ticket-title" placeholder="Enter ticket title">
                 <label for="ticket-description">Description:</label>
                 <textarea id="ticket-description" placeholder="Describe the issue"></textarea>
 
                 <!-- Video Upload -->
                 <label for="ticket-video">Attach Video:</label>
-                <input type="file" id="ticket-video" accept="video/*" />
+                <input type="file" id="ticket-video" accept="video/*">
 
                 <!-- File Upload -->
                 <label for="ticket-files">Attach Files:</label>
-                <input type="file" id="ticket-files" accept="image/*, application/pdf" multiple />
+                <input type="file" id="ticket-files" accept="image/*, application/pdf" multiple>
 
                 <button onclick="createTicket()">Create Ticket</button>
                 <button onclick="closeCreateTicketModal()">Cancel</button>
@@ -277,18 +277,32 @@
             </optgroup>
         </select>
 
-        <!-- <picture> -->
-        <picture>
-            <source srcset="image.jpg" media="(max-width: 600px)">
-            <img src="image.jpg" alt="Responsive image">
-        </picture>
+        <!-- <option> -->
+        <select>
+            <option value="value1">Option 1</option>
+            <option value="value2">Option 2</option>
+        </select>
+
+        <!-- <output> -->
+        <form>
+            <label for="result">Result:</label>
+            <output id="result">0</output>
+        </form>
+
+        <!-- <p> -->
+        <p>This is a paragraph.</p>
 
         <!-- <pre> -->
-        <pre>
-const x = 10;
-const y = 20;
-console.log(x + y);
-        </pre>
+        <pre>Preformatted text</pre>
+
+        <!-- <progress> -->
+        <progress value="70" max="100"></progress>
+
+        <!-- <q> -->
+        <q>Inline quotation</q>
+
+        <!-- <s> -->
+        <p>This text is <s>struck through</s>.</p>
 
         <!-- <samp> -->
         <p><samp>Sample output</samp></p>
