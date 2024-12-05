@@ -5,162 +5,153 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IT Support Dashboard</title>
     <style>
-        /* Base styles */
+        /* Reset some default styles */
+        body, h1, h2, h3, p, table, ul, li, form {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
             padding: 20px;
         }
-        .login-container, .dashboard-container, .ticket-container {
-            background-color: #f8f8f8;
+
+        header, footer {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .login-container, .dashboard-container {
+            background-color: white;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .login-container {
-            max-width: 300px;
-            margin: auto;
-            background-color: red;
-            padding: 30px;
-            border-radius: 8px;
-        }
-        .login-container input {
+
+        .login-container input,
+        .dashboard-container input,
+        .ticket-modal input,
+        .ticket-modal textarea {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
             border-radius: 4px;
-            border: 1px solid #ddd;
+            border: 1px solid #ccc;
         }
-        .login-container button {
-            background-color: #4CAF50;
-            color: white;
+
+        button {
             padding: 10px 20px;
+            background-color: #333;
+            color: white;
             border: none;
-            cursor: pointer;
             border-radius: 4px;
+            cursor: pointer;
         }
-        .login-container button:hover {
-            background-color: #45a049;
+
+        button:hover {
+            background-color: #555;
         }
-        .dashboard-container {
-            display: none;
-            background-color: #f8f8f8;
+
+        .dashboard-container nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
         }
-        .dashboard-container h2 {
-            color: #4CAF50;
+
+        .dashboard-container nav ul li {
+            display: inline;
         }
-        .table {
+
+        .dashboard-container nav ul li a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-container input,
+        .search-container select {
+            width: 200px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-        .table th, .table td {
+
+        th, td {
             padding: 10px;
-            text-align: left;
             border: 1px solid #ddd;
+            text-align: left;
         }
-        .table th {
-            background-color: #4CAF50;
+
+        th {
+            background-color: #333;
             color: white;
         }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .create-button {
-            background-color: #007BFF;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-            display: inline-block;
-        }
-        .create-button:hover {
-            background-color: #0056b3;
-        }
+
         .ticket-modal {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            right: 0;
+            bottom: 0;
             background: rgba(0, 0, 0, 0.5);
-            display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 1000;
         }
+
         .ticket-modal-content {
             background-color: white;
             padding: 20px;
             border-radius: 8px;
             width: 400px;
         }
-        .ticket-modal-content input,
-        .ticket-modal-content textarea,
-        .ticket-modal-content select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
-        .ticket-modal-content button {
-            background-color: #007BFF;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        .ticket-modal-content button:hover {
-            background-color: #0056b3;
-        }
-        /* Video Styles */
-        .video-container {
-            margin-top: 10px;
-            padding: 10px;
-        }
-        video {
-            width: 100%;
-            max-height: 300px;
-            border-radius: 8px;
-        }
-        /* File Upload Styles */
-        .file-upload-container {
-            margin-top: 10px;
-        }
-        .file-upload-container input[type="file"] {
-            padding: 10px;
-            border-radius: 4px;
-        }
-        /* Search Styles */
-        .search-container {
+
+        .ticket-modal-content h3 {
             margin-bottom: 20px;
         }
-        .search-container input, .search-container select {
-            padding: 8px;
-            margin-right: 10px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
+
+        /* Responsive Design */
+        @media (min-width: 600px) {
+            main {
+                flex-direction: row;
+                gap: 20px;
+            }
+            
+            .login-container, .dashboard-container {
+                width: 48%;
+            }
         }
-        .report-button {
-            background-color: #ff9800;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
+
+        /* Make images responsive */
+        picture img {
+            width: 100%;
+            height: auto;
         }
-        .report-button:hover {
-            background-color: #e68900;
-        }
+
     </style>
 </head>
 <body>
@@ -174,33 +165,31 @@
         <!-- Login Page -->
         <section class="login-container" id="login-page">
             <h2>Login</h2>
-            <input type="text" id="username" placeholder="Username" />
-            <input type="password" id="password" placeholder="Password" />
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
             <button onclick="login()">Login</button>
         </section>
 
-        <!-- Dashboard (IT Staff View) -->
+        <!-- IT Dashboard -->
         <section class="dashboard-container" id="it-dashboard">
             <h2>IT Staff Dashboard</h2>
             <button onclick="logout()">Logout</button>
 
-            <!-- Search Section -->
+            <nav>
+                <ul>
+                    <li><a href="#ticket-creation-modal">Create New Ticket</a></li>
+                    <li><a href="#report-section">Generate Report</a></li>
+                </ul>
+            </nav>
+
             <div class="search-container">
-                <input type="text" id="search-title" placeholder="Search by Title" oninput="filterIssues()" />
+                <input type="text" id="search-title" placeholder="Search by Title" oninput="filterIssues()">
                 <select id="search-status" onchange="filterIssues()">
                     <option value="">Status</option>
                     <option value="Open">Open</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Resolved">Resolved</option>
                 </select>
-                <select id="search-priority" onchange="filterIssues()">
-                    <option value="">Priority</option>
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                </select>
-                <input type="date" id="search-date" onchange="filterIssues()" />
-                <button class="report-button" onclick="generateReport()">Generate Report</button>
             </div>
 
             <table id="issue-table" class="table">
@@ -215,15 +204,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Issue rows will be injected here -->
+                    <tr>
+                        <td>123</td>
+                        <td>System Issue</td>
+                        <td>Open</td>
+                        <td>High</td>
+                        <td>John Doe</td>
+                        <td><a href="#" onclick="viewTicket(123)">View</a></td>
+                    </tr>
                 </tbody>
             </table>
         </section>
 
-        <!-- User Dashboard (User View) -->
+        <!-- User Dashboard -->
         <section class="dashboard-container" id="user-dashboard">
             <h2>User Dashboard</h2>
             <button onclick="logout()">Logout</button>
+            <ul>
+                <li><a href="#ticket-creation-modal">Create New Ticket</a></li>
+            </ul>
 
             <table id="user-issue-table" class="table">
                 <thead>
@@ -239,42 +238,45 @@
                     <!-- User issues will be injected here -->
                 </tbody>
             </table>
-
-            <button class="create-button" onclick="openCreateTicketModal()">Create New Ticket</button>
         </section>
 
-        <!-- Ticket Creation Modal for Users -->
+        <!-- Ticket Creation Modal -->
         <section class="ticket-modal" id="ticket-creation-modal" style="display:none;">
             <div class="ticket-modal-content">
                 <h3>Create New Ticket</h3>
                 <label for="ticket-title">Title:</label>
-                <input type="text" id="ticket-title" placeholder="Enter ticket title" />
+                <input type="text" id="ticket-title" placeholder="Enter ticket title">
                 <label for="ticket-description">Description:</label>
                 <textarea id="ticket-description" placeholder="Describe the issue"></textarea>
-                <label for="ticket-priority">Priority:</label>
-                <select id="ticket-priority">
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                </select>
 
                 <!-- Video Upload -->
                 <label for="ticket-video">Attach Video:</label>
-                <input type="file" id="ticket-video" accept="video/*" />
+                <input type="file" id="ticket-video" accept="video/*">
 
                 <!-- File Upload -->
                 <label for="ticket-files">Attach Files:</label>
-                <input type="file" id="ticket-files" accept="image/*, application/pdf" multiple />
+                <input type="file" id="ticket-files" accept="image/*, application/pdf" multiple>
 
                 <button onclick="createTicket()">Create Ticket</button>
                 <button onclick="closeCreateTicketModal()">Cancel</button>
             </div>
         </section>
 
+        <!-- Picture Element (Responsive Images) -->
+        <section>
+            <h3>Responsive Image Example</h3>
+            <picture>
+                <source srcset="image-small.jpg" media="(max-width: 600px)">
+                <source srcset="image-medium.jpg" media="(max-width: 1200px)">
+                <img src="image-large.jpg" alt="Responsive IT Support Image">
+            </picture>
+        </section>
+
+        <!-- Other elements remain unchanged -->
     </main>
 
     <footer>
-        <p>© 2024 IT Support Dashboard. All rights reserved.</p>
+        <p>&copy; 2024 IT Support Dashboard. All rights reserved.</p>
     </footer>
 
     <script>
@@ -294,16 +296,16 @@
             document.getElementById('ticket-creation-modal').style.display = 'none';
         }
 
-        function filterIssues() {
-            // Implement filter functionality
-        }
-
         function createTicket() {
             // Implement ticket creation functionality
         }
 
-        function generateReport() {
-            // Implement report generation
+        function filterIssues() {
+            // Implement filter functionality
+        }
+
+        function viewTicket(ticketId) {
+            alert('Viewing ticket ' + ticketId);
         }
     </script>
 </body>
