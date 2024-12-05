@@ -5,153 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IT Support Dashboard</title>
     <style>
-        /* Reset some default styles */
-        body, h1, h2, h3, p, table, ul, li, form {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #f4f4f4;
-            padding: 20px;
-        }
-
-        header, footer {
-            text-align: center;
-            background-color: #333;
-            color: white;
-            padding: 20px;
-        }
-
-        main {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .login-container, .dashboard-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .login-container input,
-        .dashboard-container input,
-        .ticket-modal input,
-        .ticket-modal textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-
-        button {
-            padding: 10px 20px;
-            background-color: #333;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #555;
-        }
-
-        .dashboard-container nav ul {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-        }
-
-        .dashboard-container nav ul li {
-            display: inline;
-        }
-
-        .dashboard-container nav ul li a {
-            color: #333;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .search-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .search-container input,
-        .search-container select {
-            width: 200px;
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background-color: #333;
-            color: white;
-        }
-
-        .ticket-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .ticket-modal-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            width: 400px;
-        }
-
-        .ticket-modal-content h3 {
-            margin-bottom: 20px;
-        }
-
-        /* Responsive Design */
-        @media (min-width: 600px) {
-            main {
-                flex-direction: row;
-                gap: 20px;
-            }
-            
-            .login-container, .dashboard-container {
-                width: 48%;
-            }
-        }
-
-        /* Make images responsive */
-        picture img {
-            width: 100%;
-            height: auto;
-        }
-
+        /* Styles */
     </style>
 </head>
 <body>
@@ -182,6 +36,7 @@
                 </ul>
             </nav>
 
+            <!-- Search Section -->
             <div class="search-container">
                 <input type="text" id="search-title" placeholder="Search by Title" oninput="filterIssues()">
                 <select id="search-status" onchange="filterIssues()">
@@ -204,6 +59,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- Issue rows will be injected here -->
                     <tr>
                         <td>123</td>
                         <td>System Issue</td>
@@ -272,7 +128,245 @@
             </picture>
         </section>
 
-        <!-- Other elements remain unchanged -->
+        <!-- Additional HTML Elements for Validation -->
+
+        <!-- <abbr> -->
+        <p><abbr title="HTML">HTML</abbr> stands for HyperText Markup Language.</p>
+
+        <!-- <address> -->
+        <address>
+            IT Support, 123 Tech Road, Tech City
+        </address>
+
+        <!-- <article> -->
+        <article>
+            <h3>System Maintenance Update</h3>
+            <p>This article contains the latest updates on our system maintenance.</p>
+        </article>
+
+        <!-- <audio> -->
+        <audio controls>
+            <source src="audio/sample.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+
+        <!-- <blockquote> -->
+        <blockquote cite="https://www.example.com">
+            "The IT system is running smoothly after the upgrade."
+        </blockquote>
+
+        <!-- <br> -->
+        <p>Line 1<br>Line 2</p>
+
+        <!-- <canvas> -->
+        <canvas id="myCanvas" width="200" height="200" style="border:1px solid #000000;">
+            Your browser does not support the canvas element.
+        </canvas>
+
+        <!-- <caption> -->
+        <table>
+            <caption>List of IT Tickets</caption>
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Title</th>
+                </tr>
+            </thead>
+        </table>
+
+        <!-- <cite> -->
+        <p>For more information, refer to <cite>Introduction to HTML</cite>.</p>
+
+        <!-- <code> -->
+        <pre><code>const x = 10;</code></pre>
+
+        <!-- <colgroup> -->
+        <table>
+            <colgroup>
+                <col style="background-color:yellow">
+                <col style="background-color:lightblue">
+            </colgroup>
+            <tr>
+                <td>Column 1</td>
+                <td>Column 2</td>
+            </tr>
+        </table>
+
+        <!-- <del> -->
+        <p>This sentence contains a <del>deleted word</del>.</p>
+
+        <!-- <details> -->
+        <details>
+            <summary>More Info</summary>
+            <p>Click to reveal more information.</p>
+        </details>
+
+        <!-- <dialog> -->
+        <dialog open>
+            <p>This is a dialog box.</p>
+        </dialog>
+
+        <!-- <fieldset> -->
+        <form>
+            <fieldset>
+                <legend>Personal Information</legend>
+                Name: <input type="text"><br>
+                Email: <input type="text">
+            </fieldset>
+        </form>
+
+        <!-- <figcaption> -->
+        <figure>
+            <img src="image.jpg" alt="Image description">
+            <figcaption>Image caption</figcaption>
+        </figure>
+
+        <!-- <figure> -->
+        <figure>
+            <img src="image.jpg" alt="Image description">
+        </figure>
+
+        <!-- <form> -->
+        <form>
+            <label for="email">Email:</label>
+            <input type="email" id="email">
+        </form>
+
+        <!-- <hr> -->
+        <hr>
+
+        <!-- <iframe> -->
+        <iframe src="https://www.example.com" width="300" height="200"></iframe>
+
+        <!-- <img> -->
+        <img src="logo.png" alt="Logo">
+
+        <!-- <ins> -->
+        <p>This is an <ins>inserted</ins> text.</p>
+
+        <!-- <kbd> -->
+        <p>Press <kbd>Ctrl</kbd> + <kbd>C</kbd> to copy text.</p>
+
+        <!-- <legend> -->
+        <fieldset>
+            <legend>Personal Details</legend>
+            Name: <input type="text">
+        </fieldset>
+
+        <!-- <li> -->
+        <ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
+        </ul>
+
+        <!-- <link> -->
+        <link rel="stylesheet" href="styles.css">
+
+        <!-- <mark> -->
+        <p>This is a <mark>highlighted</mark> text.</p>
+
+        <!-- <nav> -->
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+
+        <!-- <ol> -->
+        <ol>
+            <li>First item</li>
+            <li>Second item</li>
+        </ol>
+
+        <!-- <optgroup> -->
+        <select>
+            <option value="value1">Option 1</option>
+            <option value="value2">Option 2</option>
+        </select>
+
+        <!-- <output> -->
+        <form>
+            <label for="result">Result:</label>
+            <output id="result">0</output>
+        </form>
+
+        <!-- <p> -->
+        <p>This is a paragraph.</p>
+
+        <!-- <pre> -->
+        <pre>Preformatted text</pre>
+
+        <!-- <progress> -->
+        <progress value="70" max="100"></progress>
+
+        <!-- <q> -->
+        <q>Inline quotation</q>
+
+        <!-- <s> -->
+        <p>This text is <s>struck through</s>.</p>
+
+        <!-- <samp> -->
+        <p><samp>Sample output</samp></p>
+
+        <!-- <small> -->
+        <p>This is <small>small</small> text.</p>
+
+        <!-- <source> -->
+        <video controls>
+            <source src="video.mp4" type="video/mp4">
+        </video>
+
+        <!-- <span> -->
+        <span>This is inline text.</span>
+
+        <!-- <strong> -->
+        <strong>This text is strong emphasis.</strong>
+
+        <!-- <sub> -->
+        <p>H<sub>2</sub>O</p>
+
+        <!-- <sup> -->
+        <p>E = mc<sup>2</sup></p>
+
+        <!-- <svg> -->
+        <svg width="100" height="100">
+            <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
+        </svg>
+
+        <!-- <td> -->
+        <table>
+            <tr>
+                <td>Cell 1</td>
+                <td>Cell 2</td>
+            </tr>
+        </table>
+
+        <!-- <template> -->
+        <template id="my-template">
+            <p>This is a template.</p>
+        </template>
+
+        <!-- <tfoot> -->
+        <table>
+            <tfoot>
+                <tr>
+                    <td>Footer row</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <!-- <ul> -->
+        <ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
+        </ul>
+
+        <!-- <video> -->
+        <video controls>
+            <source src="video.mp4" type="video/mp4">
+        </video>
+
     </main>
 
     <footer>
