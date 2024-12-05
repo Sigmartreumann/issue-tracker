@@ -1,25 +1,29 @@
-# Web App Issue Tracker
+# IT Support Dashboard
 
-This project is a basic issue tracker web application that allows users to submit and track their issues, and allows IT staff to manage, resolve, and close tickets.
-
-## How to Run
-
-1. Clone or download the project files to your local machine.
-2. Open `index.html` in any modern web browser to view the application.
+This is a web-based IT Support Dashboard designed for managing IT support tickets. It allows IT staff to manage issues, assign them, resolve them, and generate reports. Users can create and track their own tickets, with the ability to upload videos and files for each ticket.
 
 ## Features
 
-- Users can submit issues.
-- IT staff can resolve, close, or reopen issues.
-- Status updates and notifications for users.
-- Users can track their submitted issues.
+### For IT Staff:
+- View and manage all support tickets.
+- Filter tickets by status, priority, title, and creation date.
+- Resolve tickets and assign them to staff members.
+- Generate reports on ticket data.
 
-## How to Contribute
+### For Users:
+- Create new support tickets.
+- Attach files and videos to tickets.
+- Track the status of your tickets.
 
-1. Fork the repository.
-2. Make your changes and test them locally.
-3. Create a pull request to contribute your changes.
+## Prerequisites
 
-## License
+- A modern web browser (Chrome, Firefox, Edge, Safari).
+- No server-side technology required (entire app is client-side).
 
-This project is open source and available under the [MIT License](LICENSE).
+## Setup
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/your-username/it-support-dashboard.git
+   cd it-support-dashboard

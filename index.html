@@ -3,133 +3,381 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Issue Management Dashboard</title>
+    <title>IT Support Dashboard</title>
     <style>
-        /* Basic CSS styling for the layout */
+        /* Base styles */
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            padding: 20px;
         }
-        table {
+        .login-container, .dashboard-container, .ticket-container {
+            background-color: #f8f8f8;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .login-container {
+            max-width: 300px;
+            margin: auto;
+            background-color: red;
+            padding: 30px;
+            border-radius: 8px;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .login-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .login-container button:hover {
+            background-color: #45a049;
+        }
+        .dashboard-container {
+            display: none;
+            background-color: #f8f8f8;
+        }
+        .dashboard-container h2 {
+            color: #4CAF50;
+        }
+        .table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
+        .table th, .table td {
             padding: 10px;
             text-align: left;
+            border: 1px solid #ddd;
         }
-        button {
-            padding: 10px 15px;
-            margin-top: 10px;
+        .table th {
             background-color: #4CAF50;
             color: white;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
             border: none;
             cursor: pointer;
+            border-radius: 4px;
         }
         button:hover {
             background-color: #45a049;
         }
+        .create-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .create-button:hover {
+            background-color: #0056b3;
+        }
+        .ticket-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .ticket-modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+        }
+        .ticket-modal-content input,
+        .ticket-modal-content textarea,
+        .ticket-modal-content select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .ticket-modal-content button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .ticket-modal-content button:hover {
+            background-color: #0056b3;
+        }
+        /* Video Styles */
+        .video-container {
+            margin-top: 10px;
+            padding: 10px;
+        }
+        video {
+            width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+        }
+        /* File Upload Styles */
+        .file-upload-container {
+            margin-top: 10px;
+        }
+        .file-upload-container input[type="file"] {
+            padding: 10px;
+            border-radius: 4px;
+        }
+        /* Search Styles */
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-container input, .search-container select {
+            padding: 8px;
+            margin-right: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .report-button {
+            background-color: #ff9800;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .report-button:hover {
+            background-color: #e68900;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Issue Management Dashboard</h1>
-        <p>Welcome to the IT issue management system. You can view, manage, and resolve tickets here.</p>
-    </header>
-    <section>
-        <h2>Search for Issues</h2>
-        <form action="#" method="GET">
-            <label for="ticket-id">Ticket ID:</label>
-            <input type="text" id="ticket-id" name="ticket-id" placeholder="Enter ticket ID (e.g., #IT1001)">
-            <label for="status">Status:</label>
-            <select id="status" name="status">
-                <option value="all">All</option>
-                <option value="open">Open</option>
-                <option value="resolved">Resolved</option>
-                <option value="in-progress">In Progress</option>
+
+    <!-- Login Page -->
+    <div class="login-container" id="login-page">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username" />
+        <input type="password" id="password" placeholder="Password" />
+        <button onclick="login()">Login</button>
+    </div>
+
+    <!-- Dashboard (IT Staff View) -->
+    <div class="dashboard-container" id="it-dashboard">
+        <h2>IT Staff Dashboard</h2>
+        <button onclick="logout()">Logout</button>
+
+        <!-- Search Section -->
+        <div class="search-container">
+            <input type="text" id="search-title" placeholder="Search by Title" oninput="filterIssues()" />
+            <select id="search-status" onchange="filterIssues()">
+                <option value="">Status</option>
+                <option value="Open">Open</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Resolved">Resolved</option>
             </select>
-            <button type="submit">Search</button>
-        </form>
-    </section>
-    <section>
-        <h2>Search Results</h2>
-        <table>
+            <select id="search-priority" onchange="filterIssues()">
+                <option value="">Priority</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+            <input type="date" id="search-date" onchange="filterIssues()" />
+            <button class="report-button" onclick="generateReport()">Generate Report</button>
+        </div>
+
+        <table id="issue-table" class="table">
             <thead>
                 <tr>
                     <th>Ticket ID</th>
                     <th>Title</th>
                     <th>Status</th>
                     <th>Priority</th>
-                    <th>Submission Date</th>
+                    <th>Assigned To</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>#IT1001</td>
-                    <td>Password Reset</td>
-                    <td>Open</td>
-                    <td>High</td>
-                    <td>2024-11-01</td>
-                </tr>
-                <tr>
-                    <td>#IT1002</td>
-                    <td>Printer Issue</td>
-                    <td>Resolved</td>
-                    <td>Medium</td>
-                    <td>2024-11-05</td>
-                </tr>
+                <!-- Issue rows will be injected here -->
             </tbody>
         </table>
-    </section>
-    <section>
-        <h2>Resolve an Issue</h2>
-        <form action="#" method="POST">
-            <label for="resolution-description">Resolution Description:</label>
-            <textarea id="resolution-description" name="resolution-description" rows="4" placeholder="Describe how the issue was resolved..."></textarea>
-            <button type="submit">Resolve Issue</button>
-        </form>
-    </section>
-    <section>
-        <h2>Close Issue</h2>
-        <form action="#" method="POST">
-            <button type="submit">Close Issue</button>
-        </form>
-    </section>
-    
-    <section>
-        <h2>Provide Feedback</h2>
-        <form>
-            <fieldset>
-              <legend>How do you rate our service?</legend>
-          
-              <label for="very-satisfied">Very satisfied</label>
-              <input type="radio" id="very-satisfied" name="satisfaction" value="Very Satisfied">
-          
-              <label for="satisfied">Satisfied</label>
-              <input type="radio" id="satisfied" name="satisfaction" value="Satisfied">
-          
-              <label for="dissatisfied">Dissatisfied</label>
-              <input type="radio" id="dissatisfied" name="satisfaction" value="Dissatisfied">
-          
-              <label for="comments">Additional Comments</label>
-              <textarea id="comments" name="comments" rows="4" cols="50"></textarea>
-            </fieldset>
-          </form>
-    </section>
-    <section>
-        <h2>Generate Reports</h2>
-        <form action="#" method="GET">
-            <label for="report-type">Select Report Type:</label>
-            <select id="report-type" name="report-type">
-                <option value="ticket-summary">Ticket Summary</option>
-                <option value="resolved-issues">Resolved Issues</option>
-                <option value="performance">Performance Metrics</option>
+    </div>
+
+    <!-- User Dashboard (User View) -->
+    <div class="dashboard-container" id="user-dashboard">
+        <h2>User Dashboard</h2>
+        <button onclick="logout()">Logout</button>
+
+        <table id="user-issue-table" class="table">
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- User issues will be injected here -->
+            </tbody>
+        </table>
+
+        <button class="create-button" onclick="openCreateTicketModal()">Create New Ticket</button>
+    </div>
+
+    <!-- Ticket Creation Modal for Users -->
+    <div class="ticket-modal" id="ticket-creation-modal" style="display:none;">
+        <div class="ticket-modal-content">
+            <h3>Create New Ticket</h3>
+            <label for="ticket-title">Title:</label>
+            <input type="text" id="ticket-title" placeholder="Enter ticket title" />
+            <label for="ticket-description">Description:</label>
+            <textarea id="ticket-description" placeholder="Describe the issue"></textarea>
+            <label for="ticket-priority">Priority:</label>
+            <select id="ticket-priority">
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
             </select>
-            <button type="submit">Generate Report</button>
-        </form>
-    </section>
-                  
+
+            <!-- Video Upload -->
+            <label for="ticket-video">Attach Video:</label>
+            <input type="file" id="ticket-video" accept="video/*" />
+
+            <!-- File Upload -->
+            <label for="ticket-files">Attach Files:</label>
+            <input type="file" id="ticket-files" accept="image/*, application/pdf" multiple />
+
+            <button onclick="createTicket()">Create Ticket</button>
+            <button onclick="closeCreateTicketModal()">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        let allIssues = [];
+        let filteredIssues = [];
+
+        function login() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (username && password) {
+                currentUser = username;
+                document.getElementById("login-page").style.display = "none";
+                if (username === "admin") {
+                    document.getElementById("it-dashboard").style.display = "block";
+                    populateIssuesTable("it");
+                } else {
+                    document.getElementById("user-dashboard").style.display = "block";
+                    populateIssuesTable("user");
+                }
+            } else {
+                alert("Invalid username or password");
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById("it-dashboard").style.display = "none";
+            document.getElementById("user-dashboard").style.display = "none";
+            document.getElementById("login-page").style.display = "block";
+        }
+
+        function populateIssuesTable(role) {
+            const table = role === "it" ? document.getElementById("issue-table") : document.getElementById("user-issue-table");
+            const tbody = table.querySelector("tbody");
+            tbody.innerHTML = "";
+
+            filteredIssues.forEach(issue => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${issue.id}</td>
+                    <td>${issue.title}</td>
+                    <td>${issue.status}</td>
+                    <td>${issue.priority}</td>
+                    <td>${issue.assignedTo || "Unassigned"}</td>
+                    <td>
+                        ${role === "it" ? `<button onclick="resolveIssue(${issue.id})">Resolve</button>` : ""}
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function resolveIssue(id) {
+            const issue = filteredIssues.find(issue => issue.id === id);
+            if (issue) {
+                issue.status = "Resolved";
+                populateIssuesTable("it");
+            }
+        }
+
+        function filterIssues() {
+            const searchTitle = document.getElementById("search-title").value.toLowerCase();
+            const searchStatus = document.getElementById("search-status").value;
+            const searchPriority = document.getElementById("search-priority").value;
+            const searchDate = document.getElementById("search-date").value;
+
+            filteredIssues = allIssues.filter(issue => {
+                return (!searchTitle || issue.title.toLowerCase().includes(searchTitle)) &&
+                    (!searchStatus || issue.status === searchStatus) &&
+                    (!searchPriority || issue.priority === searchPriority);
+            });
+
+            populateIssuesTable("it");
+        }
+
+        function generateReport() {
+            alert("Report generated!");
+        }
+
+        function openCreateTicketModal() {
+            document.getElementById("ticket-creation-modal").style.display = "flex";
+        }
+
+        function closeCreateTicketModal() {
+            document.getElementById("ticket-creation-modal").style.display = "none";
+        }
+
+        function createTicket() {
+            const title = document.getElementById("ticket-title").value;
+            const description = document.getElementById("ticket-description").value;
+            const priority = document.getElementById("ticket-priority").value;
+
+            if (title && description) {
+                const newTicket = {
+                    id: allIssues.length + 1,
+                    title,
+                    description,
+                    status: "Open",
+                    priority,
+                    assignedTo: "",
+                    creator: currentUser,
+                    resolution: "",
+                    attachments: []
+                };
+                allIssues.push(newTicket);
+                filteredIssues = allIssues;
+                populateIssuesTable("user");
+                closeCreateTicketModal();
+            } else {
+                alert("Please fill in all fields");
+            }
+        }
+    </script>
+
+</body>
+</html>
