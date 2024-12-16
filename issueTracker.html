@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login, Registration, and Issue Management</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        .confirmation {
+            color: green;
+            font-size: 14px;
+        }
+
+        /* Search and filter styles */
+        #search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #report-container {
+            margin-top: 20px;
+        }
+
+        #search-results {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #search-results th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        #search-results th {
+            background-color: #f1c40f;
+        }
+
+        #report-container button {
+            background-color: #e67e22;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #report-container button:hover {
+            background-color: #d35400;
+        }
+
+        /* User and IT staff notifications */
+        .notification {
+            color: blue;
+            font-size: 16px;
+        }
+
+        /* Comments and responses styles */
+        .comments-section {
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+
+        .comment {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .comment p {
+            margin: 0;
+        }
+
+        .comment-form {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Registration Page -->
+    <div class="container" id="registration-container" style="display: none;">
+        <h2>Register New User</h2>
+        <form onsubmit="handleRegistration(event)">
+            <label for="reg-email">Email</label>
+            <input type="email" id="reg-email" name="email" placeholder="Enter your email" required>
+
+            <label for="reg-password">Password</label>
+            <input type="password" id="reg-password" name="password" placeholder="Enter your password" required>
+
+            <div class="error" id="registration-error"></div>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <!-- Login Page -->
+    <div class="container" id="login-container">
+        <h2>Login</h2>
+        <form onsubmit="handleLogin(event)">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+            <div class="error" id="login-error"></div>
+
+            <button type="submit">Login</button>
+            <button type="button" onclick="showSection('registration')">Create New Account</button>
+        </form>
+    </div>
+
+    <!-- Navigation -->
+    <div id="nav-container" style="display: none;">
+        <button onclick="showSection('submit-issue')">Submit New Issue</button>
+        <button onclick="showSection('view-issues')">View My Tickets</button>
+        <button id="it-dashboard-btn" onclick="showSection('it-dashboard')" style="display: none;">IT Staff Dashboard</button>
+        <button onclick="showSection('search-issues')">Search Issues</button>
+    </div>
+
+    <!-- Submit Issue Page -->
+    <div class="container" id="submit-issue-container" style="display: none;">
+        <h2>Submit an Issue</h2>
+        <form id="issueForm" onsubmit="handleIssueSubmission(event)">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" placeholder="Enter issue title" required>
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description" placeholder="Describe the issue" rows="4" required></textarea>
+
+            <label for="urgency">Urgency Level</label>
+            <select id="urgency" name="urgency">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+
+            <div class="error" id="issue-error"></div>
+
+            <div class="confirmation" id="issue-confirmation"></div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <!-- View Issues Page -->
+    <div class="container" id="view-issues-container" style="display: none;">
+        <h2>Your Submitted Issues</h2>
+        <div id="issue-list">
+            <!-- Tickets list will appear here -->
+        </div>
+        <button onclick="showSection('submit-issue')">Submit New Issue</button>
+    </div>
+
+    <!-- Search Issues Page -->
+    <div class="container" id="search-issues-container" style="display: none;">
+        <h2>Search Issues</h2>
+        <div id="search-container">
+            <input type="text" id="search-bar" class="search-input" placeholder="Search by ID, title, status, etc." onkeyup="searchIssues()">
+            <label for="status-filter">Status:</label>
+            <select id="status-filter" onchange="searchIssues()">
+                <option value="">All</option>
+                <option value="Open">Open</option>
+                <option value="Resolved">Resolved</option>
+                <option value="Closed">Closed</option>
+            </select>
+            <label for="priority-filter">Priority:</label>
+            <select id="priority-filter" onchange="searchIssues()">
+                <option value="">All</option>
+                <option value="High">High</option>
+                <option value="Low">Low</option>
+            </select>
+            <label for="date-filter">Date Range:</label>
+            <input type="date" id="date-filter" onchange="searchIssues()">
+        </div>
+        <div id="search-results-container">
+            <table id="search-results">
+                <thead>
+                    <tr>
+                        <th>Ticket ID</th>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Date Submitted</th>
+                    </tr>
+                </thead>
+                <tbody id="search-results-body">
+                    <!-- Search results will appear here -->
+                </tbody>
+            </table>
+        </div>
+        <button onclick="showSection('submit-issue')">Submit New Issue</button>
+    </div>
+
+    <!-- IT Staff Dashboard -->
+    <div class="container" id="it-dashboard-container" style="display: none;">
+        <h2>IT Staff Dashboard</h2>
+        <div id="issue-list-for-it">
+            <!-- All tickets list for IT staff -->
+        </div>
+    </div>
+
+    <script>
+        // Mock Data for Users
+        const mockUser = {
+            email: "user@example.com",
+            password: "password123",
+            issues: []
+        };
+
+        const mockItStaff = {
+            email: "it_staff@example.com",
+            password: "password123",
+            isAdmin: true, // IT staff has admin rights
+            issues: []
+        };
+
+        let currentUser = null; // All users start logged out
+        const users = [mockUser, mockItStaff]; // Users array to store registered users
+
+        // Handle Registration
+        function handleRegistration(event) {
+            event.preventDefault();
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const errorElement = document.getElementById('registration-error');
+
+            // Check if email already exists
+            if (users.some(user => user.email === email)) {
+                errorElement.innerHTML = "This email is already registered.";
+                return;
+            }
+
+            const newUser = {
+                email,
+                password,
+                issues: []
+            };
+
+            users.push(newUser); // Add new user to the users array
+            errorElement.innerHTML = '';
+            alert("Registration successful! You can now log in.");
+            showSection('login');
+        }
+
+        // Handle Login
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorElement = document.getElementById('login-error');
+
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                currentUser = user;
+                errorElement.innerHTML = '';
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('nav-container').style.display = 'block';
+                showSection('view-issues');
+            } else {
+                errorElement.innerHTML = "Invalid email or password.";
+            }
+        }
+
+        // Show different sections
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.container');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+
+            const section = document.getElementById(`${sectionId}-container`);
+            if (section) {
+                section.style.display = 'block';
+            }
+        }
+
+        // Handle Issue Submission
+        function handleIssueSubmission(event) {
+            event.preventDefault();
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const urgency = document.getElementById('urgency').value;
+
+            const newIssue = {
+                id: `#IT${Math.floor(Math.random() * 10000)}`,
+                title,
+                description,
+                status: 'Open',
+                priority: urgency,
+                date: new Date().toLocaleDateString(),
+                comments: [] // Add support for comments
+            };
+
+            // Add the new issue to the user's issues list
+            currentUser.issues.push(newIssue);
+
+            document.getElementById('issue-confirmation').innerHTML = "Your issue has been submitted!";
+            document.getElementById('issueForm').reset();
+        }
+
+        // Display User's Issues
+        function displayUserIssues() {
+            const issueList = document.getElementById('issue-list');
+            issueList.innerHTML = '';
+
+            currentUser.issues.forEach(issue => {
+                const issueElement = document.createElement('div');
+                issueElement.innerHTML = `
+                    <p><strong>${issue.id}</strong> - ${issue.title} - ${issue.status}</p>
+                    <div class="comments-section">
+                        <h4>Comments:</h4>
+                        <div class="comment-form">
+                            <textarea id="comment-${issue.id}" placeholder="Add a comment" rows="3"></textarea>
+                            <button onclick="addComment('${issue.id}')">Add Comment</button>
+                        </div>
+                        <div class="comments">
+                            ${issue.comments.map(comment => `
+                                <div class="comment"><p>${comment}</p></div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                issueList.appendChild(issueElement);
+            });
+        }
+
+        // Add Comment
+        function addComment(issueId) {
+            const commentText = document.getElementById(`comment-${issueId}`).value;
+            if (!commentText) return;
+
+            const issue = currentUser.issues.find(issue => issue.id === issueId);
+            if (issue) {
+                issue.comments.push(commentText);
+                displayUserIssues();
+            }
+        }
+    </script>
+</body>
+</html>
